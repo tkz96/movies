@@ -1,4 +1,5 @@
 export default function MetacriticRating({ value }) {
+    if (!value) return null;
     const getColor = (score) => {
         const num = parseInt(score);
         if (num >= 60) return 'bg-green-600';
