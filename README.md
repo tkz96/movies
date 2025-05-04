@@ -32,19 +32,24 @@ cd movies
 npm install
 ```
 
-3. Add a `.env` file with your OMDb API key:
+3. Get API Key from here:
 
-```env
-VITE_OMDB_API_KEY=9470d0de
+```https://www.omdbapi.com/apikey.aspx
 ```
 
-4. Run the app:
+4. Add a `.env` file with your OMDb API key:
+
+```env
+VITE_OMDB_API_KEY=API_KEY_HERE
+```
+
+5. Run the app:
 
 ```bash
 npm run dev
 ```
 
-5. Open `http://localhost:5173` in your browser.
+6. Open `http://localhost:5173` in your browser.
 
 ## 📁 Project Structure
 
