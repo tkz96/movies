@@ -34,7 +34,8 @@ npm install
 
 3. Get API Key from here:
 
-```https://www.omdbapi.com/apikey.aspx
+```
+https://www.omdbapi.com/apikey.aspx
 ```
 
 4. Add a `.env` file with your OMDb API key:
