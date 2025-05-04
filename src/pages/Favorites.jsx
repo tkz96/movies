@@ -1,23 +1,27 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import MovieCard from '../components/MovieCard';
+import useFavorites from '../hooks/useFavorites';
 
 export default function Favorites() {
-  const [favorites, setFavorites] = useState([]);
-
-  useEffect(() => {
-    const stored = JSON.parse(localStorage.getItem('favorites')) || [];
-    setFavorites(stored);
-  }, []);
+  const { favorites, toggleFavorite } = useFavorites();
 
   return (
-    <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4">Your Favorites</h1>
+    <div className="container mx-auto p-4">
+      <h1 className="text-3xl font-bold mb-6">Your Favorite Movies</h1>
+      
       {favorites.length === 0 ? (
-        <p>No favorite movies yet.</p>
+        <div className="text-center text-gray-500 mt-8">
+          You haven't added any favorites yet.
+        </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {favorites.map(movie => (
-            <MovieCard key={movie.imdbID} movie={movie} />
+            <MovieCard
+              key={movie.imdbID}
+              movie={movie}
+              showRemove
+              onToggleFavorite={toggleFavorite}
+            />
           ))}
         </div>
       )}
