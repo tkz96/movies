@@ -8,7 +8,7 @@ export default function MovieCard({ movie, isFavorite, onToggleFavorite }) {
     <div className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
       <div className="relative">
         <img 
-          src={movie.Poster !== 'N/A' ? movie.Poster : 'https://via.placeholder.com/300x450?text=No+Poster'}
+          src={movie.Poster !== 'N/A' ? movie.Poster : '/assets/logo/404ImageNotFound.svg'}
           alt={movie.Title}
           className="w-full h-64 object-cover rounded-t-xl cursor-pointer"
           onClick={() => navigate(`/movie/${movie.imdbID}`)}
