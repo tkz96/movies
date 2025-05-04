@@ -26,13 +26,13 @@ export default function MovieDetails() {
         <div className="flex flex-col md:flex-row">
           {/* Movie Poster */}
           <div className="md:w-1/3">
-            <img 
+            <img
               src={movie.Poster !== 'N/A' ? movie.Poster : 'https://via.placeholder.com/300x450?text=No+Poster'}
               alt={movie.Title}
               className="w-full h-full object-cover"
             />
           </div>
-          
+
           {/* Main Content */}
           <div className="md:w-2/3 p-8">
             {/* Title and Metadata */}
@@ -113,26 +113,6 @@ export default function MovieDetails() {
                   <p className="text-gray-600">{movie.Awards}</p>
                 </section>
               )}
-
-              {/* Additional Info */}
-              <section>
-                <h2 className="text-2xl font-bold text-gray-800 border-b pb-2 mb-4">Additional Information</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <p className="text-gray-600"><strong>Metascore:</strong> {movie.Metascore}</p>
-                    <p className="text-gray-600"><strong>IMDb Votes:</strong> {movie.imdbVotes}</p>
-                    <p className="text-gray-600"><strong>IMDb ID:</strong> {movie.imdbID}</p>
-                  </div>
-                  <div>
-                    {movie.DVD !== 'N/A' && (
-                      <p className="text-gray-600"><strong>DVD Release:</strong> {movie.DVD}</p>
-                    )}
-                    {movie.Response === 'True' && (
-                      <p className="text-green-600"><strong>API Response Validated</strong></p>
-                    )}
-                  </div>
-                </div>
-              </section>
             </div>
           </div>
         </div>
