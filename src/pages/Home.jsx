@@ -5,7 +5,7 @@ import Pagination from '../components/Pagination';
 import SearchHeader from '../components/SearchHeader';
 
 export default function Home() {
-  const [query, setQuery] = useState('batman');
+  const [query, setQuery] = useState('');
   const [movies, setMovies] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
@@ -18,8 +18,15 @@ export default function Home() {
 
   useEffect(() => {
     const fetchMovies = async () => {
+      if (!query.trim()) {
+        setMovies([]);
+        setTotalPages(0);
+        return;
+      }
+
       try {
         setIsLoading(true);
+        setError('');
         const { Search: results, totalResults } = await searchMovies(query, page);
 
         if (!results) throw new Error('No movies found');
@@ -28,9 +35,11 @@ export default function Home() {
           results.map(movie => getMovieDetails(movie.imdbID))
         );
 
-        setMovies(detailedMovies);
+        setMovies(detailedMovies.filter(movie => movie && movie.imdbID));
         setTotalPages(Math.ceil(parseInt(totalResults) / 10));
       } catch (err) {
+        setMovies([]);
+        setTotalPages(0);
         setError(err.message);
       } finally {
         setIsLoading(false);
@@ -61,8 +70,6 @@ export default function Home() {
     localStorage.setItem('favorites', JSON.stringify(newFavorites));
   };
 
-  if (error) return <Error message={error} />;
-
   return (
     <div className="container mx-auto p-4">
       <SearchHeader
@@ -74,21 +81,23 @@ export default function Home() {
         favoritesCount={favorites.length}
       />
 
+      {error && <Error message={error} />}
+
       {isLoading ? (
         <LoadingSpinner />
+      ) : !query.trim() ? (
+        <div className="text-center text-gray-500 mt-8">Type something to search for movies.</div>
       ) : (
         <>
           <MovieGrid>
-            {sortedMovies
-              .filter(movie => movie.imdbID) // filter invalid entries
-              .map(movie => (
-                <MovieCard
-                  key={movie.imdbID}
-                  movie={movie}
-                  isFavorite={favorites.some(f => f.imdbID === movie.imdbID)}
-                  onToggleFavorite={toggleFavorite}
-                />
-              ))}
+            {sortedMovies.map(movie => (
+              <MovieCard
+                key={movie.imdbID}
+                movie={movie}
+                isFavorite={favorites.some(f => f.imdbID === movie.imdbID)}
+                onToggleFavorite={toggleFavorite}
+              />
+            ))}
           </MovieGrid>
 
           <Pagination
